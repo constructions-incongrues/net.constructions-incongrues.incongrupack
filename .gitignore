@@ -1,0 +1,11 @@
+# composer
+/vendor/*
+
+# ide
+*.sw*
+*.bak
+*.orig
+
+# abt
+/etc/*
+!/etc/common

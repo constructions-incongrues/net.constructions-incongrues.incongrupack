@@ -1,0 +1,24 @@
+{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://constructions-incongrues.github.com/packages"
+        }
+    ],
+    "bin": ["bin/incongrupack"],
+    "require": {
+      "symfony/console": "2.*",
+      "symfony/finder": "2.*",
+      "symfony/filesystem": "2.*",
+      "php-ffmpeg/php-ffmpeg": "0.4.*@dev",
+      "alchemy/zippy": "0.1.*@dev"
+    },
+    "require-dev": {
+        "constructions-incongrues/ananas-build-toolkit": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "ConstructionsIncongrues": "src/"
+        }
+    }
+}
