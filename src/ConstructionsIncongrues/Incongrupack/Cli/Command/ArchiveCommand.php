@@ -47,6 +47,7 @@ class ArchiveCommand extends Command
             ->addArgument('source', InputArgument::OPTIONAL, 'Path to directory containing source files.', getcwd())
             ->addOption('archive-format', null, InputOption::VALUE_REQUIRED, 'Archive format', 'zip')
             ->addOption('archive-pattern', null, InputOption::VALUE_REQUIRED, 'Archive filename pattern', '%catalogid%_%outputformat%.%archiveformat%')
+            ->addOption('destination-pattern', null, InputOption::VALUE_REQUIRED, 'Transcoded audio files name pattern', '%tracknumber% - %title%.%outputformat%')
             ->addOption('output-format', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Output format. Different bitrates can be achieved using the "format_bitrate" format. eg. mp3_320, ogg_192, etc.', array_keys($this->ffmpegFormatsClassmap))
             ->addOption('source-format', null, InputOption::VALUE_REQUIRED, 'Source files audio format.', 'flac')
             ->addOption(
@@ -230,9 +231,10 @@ class ArchiveCommand extends Command
                 $ffmpegFormat->setAudioKiloBitrate($formatSpec[1]);
             }
             $audio = $ffmpeg->open($file->getRealPath());
+
             $audio->save(
                 $ffmpegFormat,
-                sprintf('%s/%s.%s', $workspace, $file->getBasename('.'.$sourceFormat), $formatSpec[0])
+                sprintf('%s/%s', $workspace, $this->buildFilename($input->getOption('destination-pattern'), $metadata, $formatSpec))
             );
             $progressGlobal->advance();
         }
@@ -242,6 +244,17 @@ class ArchiveCommand extends Command
         $finder = new Finder();
         $filesTranscoded = $finder->name('*.'.$formatSpec[0])->in($workspace);
         return $filesTranscoded;
+    }
+
+    private function buildFilename($pattern, $metadata, $formatSpec)
+    {
+        $filename = $pattern;
+        foreach ($metadata as $field => $value) {
+            $filename = str_replace(sprintf('%%%s%%', $field), $value, $filename);
+        }
+        $filename = str_replace('%outputformat%', $formatSpec[0], $filename);
+
+        return $filename;
     }
 
     /**
@@ -262,7 +275,7 @@ class ArchiveCommand extends Command
         if (!is_dir($dir = $input->getArgument('destination'))) {
             $fs = new Filesystem();
             $fs->mkdir($dir);
-            $output->writeln(sprintf('<info>Created directory</info>. {directory: "%s"}', $dir));
+            $output->writeln(sprintf('<info>Created directory.</info> {directory: "%s"}', $dir));
         }
 
         // Make sure php-ffmpeg can handle output format
