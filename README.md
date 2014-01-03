@@ -1,3 +1,19 @@
+Incongrupack fournit une suite de commandes dédiées au traitement des fichiers sonores, dans une optique de distribution sur internet.
+
+## Commandes disponibles
+
+### archive
+
+Cette commande permet de transformer un répertoire contenant des fichiers audio et autres en une série d'archives zip prête à être distribuées sur internet. À partir d'un répertoire source, elle réalise les opérations suivantes pour chaque format de sortie demandé (mp3, ogg, etc) :
+
+* Transcodage des fichiers audio source
+* Taggage des fichiers transcodés
+* Création d'une archive regroupant les fichiers transcodés et les autres fichiers du répertoire source (texte, image, etc)
+
+Il est possible de spécifier plusieurs bitrates pour chaque format de sortie.
+
+#### Exemple
+
 ```
 Usage:
  archive [--archive-format="..."] [--archive-pattern="..."] [--destination-pattern="..."] [--output-format="..."] [--source-format="..."] [--source-pattern="..."] [--workspace="..."] [--metadata-title[="..."]] [--metadata-artist[="..."]] [--metadata-album[="..."]] [--metadata-year[="..."]] [--metadata-genre[="..."]] [--metadata-comment[="..."]] [--metadata-tracknumber[="..."]] [--metadata-catalogid[="..."]] destination [source]

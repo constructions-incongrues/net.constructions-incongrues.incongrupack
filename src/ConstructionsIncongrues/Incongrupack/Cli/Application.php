@@ -7,7 +7,7 @@ class Application extends \Symfony\Component\Console\Application
 {
     public function __construct()
     {
-        parent::__construct('incongrupack', '0.1');
+        parent::__construct('incongrupack', '0.1.0');
     }
 
     protected function getDefaultCommands()

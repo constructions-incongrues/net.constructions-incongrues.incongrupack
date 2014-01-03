@@ -7,11 +7,11 @@
     ],
     "bin": ["bin/incongrupack"],
     "require": {
-      "symfony/console": "2.*",
-      "symfony/finder": "2.*",
-      "symfony/filesystem": "2.*",
-      "php-ffmpeg/php-ffmpeg": "0.4.*@dev",
-      "alchemy/zippy": "0.1.*@dev"
+      "symfony/console": "~2.4",
+      "symfony/finder": "~2.4",
+      "symfony/filesystem": "~2.4",
+      "php-ffmpeg/php-ffmpeg": "~0.4",
+      "alchemy/zippy": "~0.1"
     },
     "require-dev": {
         "constructions-incongrues/ananas-build-toolkit": "dev-master"
